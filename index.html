@@ -84,6 +84,43 @@
                 font-size: 2.8px;
             }
         }
+        /* 底部圆角矩形长条样式 */
+.bottom-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000; /* 确保显示在最前面 */
+}
+
+/* 按钮样式 */
+.button {
+    width: 80px;
+    height: 40px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* 鼠标悬停时的按钮效果 */
+.button:hover {
+    background: #0056b3;
+    transform: scale(1.1);
+}
     </style>
 </head>
 
@@ -205,6 +242,10 @@
             </div>
         </div>
     </div>
+    <div class="bottom-bar">
+        <button class="button">按钮1</button>
+        <button class="button">按钮2</button>
+        <button class="button">按钮3</button>
     </div>
 </body>
 <script>
@@ -303,6 +344,15 @@
         }
     };
     photobox.init();
+     // 获取所有按钮
+    const buttons = document.querySelectorAll('.button');
+    
+    // 给每个按钮绑定点击事件
+    buttons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            alert(`你点击了按钮${index + 1}`);
+        });
+    });
 </script>
 
 </html>
