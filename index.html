@@ -122,6 +122,51 @@
     backdrop-filter:blur(15px)
     transform: scale(1.1);
 }
+/* 全屏提示样式 */
+        #mobile-alert {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* 深色背景带透明度 */
+            backdrop-filter: blur(20px); /* 模糊效果 */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.5s ease; /* 动效 */
+        }
+
+        /* 动效 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 确认按钮样式 */
+        #mobile-alert button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #mobile-alert button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 
@@ -243,6 +288,13 @@
             </div>
         </div>
     </div>
+     <!-- 全屏提示框 -->
+    <div id="mobile-alert">
+        <div>
+            <p style="font-size: 20px;">本功能仅限PC端使用</p>
+            <button onclick="hideMobileAlert()">确认</button>
+        </div>
+    </div>
     <div class="bottom-bar">
         <button class="button" onclick="window.location.href='//mikux.fun/';">主页</button>
         <button class="button">云盘</button>
@@ -354,6 +406,30 @@
             alert(`你点击了按钮${index + 1}`);
         });
     });*/
+
+     // 检测是否为移动设备
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 显示提示
+        function showMobileAlert() {
+            if (isMobile()) {
+                const alertBox = document.getElementById('mobile-alert');
+                alertBox.style.display = 'flex';
+            }
+        }
+
+        // 隐藏提示
+        function hideMobileAlert() {
+            const alertBox = document.getElementById('mobile-alert');
+            alertBox.style.display = 'none';
+        }
+
+        // 页面加载完成后检测
+        window.onload = function() {
+            showMobileAlert();
+        };
 </script>
 
 </html>
