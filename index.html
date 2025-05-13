@@ -190,6 +190,147 @@
         {
             background-color: #0056b3;
         }
+        /* 鼠标悬停图片的圆角矩形衬底和放大按钮样式 */
+        .photos_line_photo {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            margin: 10px; /* 添加间距 */
+        }
+        
+        .photos_line_photo:hover .hover-overlay {
+            opacity: 1;
+        }
+        
+        .hover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .zoom-icon {
+            color: white;
+            font-size: 24px;
+            pointer-events: none; /* 禁用鼠标事件 */
+        }
+        
+        /* 弹窗样式 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 800px;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .modal-left {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .modal-left img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 15px;
+        }
+        
+        .modal-right {
+            flex: 3;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+        }
+        
+        .comment {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .comment-info {
+            flex: 1;
+        }
+        
+        .username {
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .comment-text {
+            margin: 5px 0 0 0;
+        }
+        
+        .comment-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: none;
+        }
+
+        .submit-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .submit-button:hover {
+            background: #0056b3;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+        }
     </style>
 </head>
      <!-- 照片区，要是我能做一个自动加入新图的功能就好了 -->
@@ -198,9 +339,15 @@
         <div class="photos_line">
             <div class="photos_line_photo">
                 <img src="photos/photo (1).png" />
+                <div class="hover-overlay">
+                    <span class="zoom-icon">🔍</span>
+                </div>
             </div>
             <div class="photos_line_photo">
                 <img src="photos/photo (2).png" />
+                <div class="hover-overlay">
+                    <span class="zoom-icon">🔍</span>
+                </div>
             </div>
             <div class="photos_line_photo">
                 <img src="photos/photo (3).png" />
@@ -370,6 +517,30 @@
         <button class="button">云盘</button>
         <button class="button">阅览</button>
     </div>
+    <!-- 弹窗结构 -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <span class="close-button" id="closeModal">&times;</span>
+            <div class="modal-left">
+                <img src="" alt="弹窗图片" id="modalImage">
+            </div>
+            <div class="modal-right">
+                <h3>评论区</h3>
+                <div class="comments" id="commentsSection">
+                    <!-- 示例评论 -->
+                    <div class="comment">
+                        <img src="avatar1.jpg" alt="头像" class="avatar">
+                        <div class="comment-info">
+                            <p class="username">用户1</p>
+                            <p class="comment-text">这是一条评论。</p>
+                        </div>
+                    </div>
+                </div>
+                <textarea placeholder="输入评论..." class="comment-input" id="commentInput"></textarea>
+                <button class="submit-button" id="submitComment">提交</button>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
     // 本网站基于 JIEJOE produce 开发模板修改实现
@@ -473,5 +644,52 @@
         document.getElementById('mobile-alert').style.display = 'none';
     }
     window.onload = showMobileAlert;
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const photos = document.querySelectorAll('.photos_line_photo img');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.getElementById('closeModal');
+    const commentsSection = document.getElementById('commentsSection');
+    const commentInput = document.getElementById('commentInput');
+    const submitComment = document.getElementById('submitComment');
+
+    // 点击图片，显示弹窗
+    photos.forEach(photo => {
+        photo.addEventListener('click', () => {
+            modalImage.src = photo.src; // 将图片传递到弹窗
+            modal.classList.add('show');
+        });
+    });
+
+    // 关闭弹窗
+    closeModal.addEventListener('click', () => {
+        modal.classList.remove('show');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    });
+
+    // 提交评论
+    submitComment.addEventListener('click', () => {
+        const commentText = commentInput.value.trim();
+        if (commentText) {
+            const comment = document.createElement('div');
+            comment.classList.add('comment');
+            comment.innerHTML = `
+                <img src="avatar-placeholder.png" alt="头像" class="avatar">
+                <div class="comment-info">
+                    <p class="username">匿名用户</p>
+                    <p class="comment-text">${commentText}</p>
+                </div>
+            `;
+            commentsSection.appendChild(comment);
+            commentInput.value = ''; // 清空输入框
+        }
+    });
+});
 </script>
 </html>
