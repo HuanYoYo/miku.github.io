@@ -340,15 +340,9 @@
         <div class="photos_line">
             <div class="photos_line_photo">
                 <img src="photos/photo (1).png" />
-                <div class="hover-overlay">
-                    <span class="zoom-icon">🔍</span>
-                </div>
             </div>
             <div class="photos_line_photo">
                 <img src="photos/photo (2).png" />
-                <div class="hover-overlay">
-                    <span class="zoom-icon">🔍</span>
-                </div>
             </div>
             <div class="photos_line_photo">
                 <img src="photos/photo (3).png" />
@@ -518,30 +512,6 @@
         <button class="button">云盘</button>
         <button class="button">阅览</button>
     </div>
-    <!-- 弹窗结构 -->
-    <div class="modal" id="imageModal">
-        <div class="modal-content">
-            <span class="close-button" id="closeModal">&times;</span>
-            <div class="modal-left">
-                <img src="" alt="弹窗图片" id="modalImage">
-            </div>
-            <div class="modal-right">
-                <h3>评论区</h3>
-                <div class="comments" id="commentsSection">
-                    <!-- 示例评论 -->
-                    <div class="comment">
-                        <img src="avatar1.jpg" alt="头像" class="avatar">
-                        <div class="comment-info">
-                            <p class="username">用户1</p>
-                            <p class="comment-text">这是一条评论。</p>
-                        </div>
-                    </div>
-                </div>
-                <textarea placeholder="输入评论..." class="comment-input" id="commentInput"></textarea>
-                <button class="submit-button" id="submitComment">提交</button>
-            </div>
-        </div>
-    </div>
 </body>
 <script>
     // 本网站基于 JIEJOE produce 开发模板修改实现
@@ -646,52 +616,6 @@
     }
     window.onload = showMobileAlert;
 
-    document.addEventListener('DOMContentLoaded', () => {
-    const photos = document.querySelectorAll('.photos_line_photo img');
-    const modal = document.getElementById('imageModal');
-    const modalImage = document.getElementById('modalImage');
-    const closeModal = document.getElementById('closeModal');
-    const commentsSection = document.getElementById('commentsSection');
-    const commentInput = document.getElementById('commentInput');
-    const submitComment = document.getElementById('submitComment');
-
-    // 点击图片，显示弹窗
-    photos.forEach(photo => {
-        photo.addEventListener('click', (e) => {
-            e.stopPropagation(); // 阻止冒泡，避免 hover 干扰
-            modalImage.src = photo.src; // 将图片传递到弹窗
-            modal.classList.add('show');
-        });
-    });
-
-    // 关闭弹窗
-    closeModal.addEventListener('click', () => {
-        modal.classList.remove('show');
-    });
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('show');
-        }
-    });
-
-    // 提交评论
-    submitComment.addEventListener('click', () => {
-        const commentText = commentInput.value.trim();
-        if (commentText) {
-            const comment = document.createElement('div');
-            comment.classList.add('comment');
-            comment.innerHTML = `
-                <img src="avatar-placeholder.png" alt="头像" class="avatar">
-                <div class="comment-info">
-                    <p class="username">匿名用户</p>
-                    <p class="comment-text">${commentText}</p>
-                </div>
-            `;
-            commentsSection.appendChild(comment);
-            commentInput.value = ''; // 清空输入框
-        }
-    });
-});
+    
 </script>
 </html>
