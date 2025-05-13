@@ -7,24 +7,33 @@
     <title>SHOOTING STAR | 相册</title>
     <script src="//xc.mikux.fun/laodongjiaoyu/gsap.js"></script>
     <style>
-        * {
+        *{
             padding: 0;
             margin: 0;
         }
-
-        img {
+        
+        body, html
+        {
+            touch-action: none; /* 禁用浏览器默认的触摸滚动 */
+            overscroll-behavior: none;/* 防止滚动超出边界 */
+        }
+        
+        img
+        {
             pointer-events: none;
             user-select: none;
         }
-
-        div {
+        
+        div
+        {
             display: flex;
             justify-content: center;
             align-items: center;
             user-select: none;
         }
-
-        body {
+        
+        body
+        {
             position: relative;
             display: flex;
             justify-content: center;
@@ -34,22 +43,25 @@
             background-color: #171717;
             overflow: hidden;
         }
-
-        .photos {
+        
+        .photos
+        {
             position: absolute;
             flex-direction: column;
             overflow: hidden;
             cursor: pointer;
         }
-
-        .photos_line {
+        
+        .photos_line
+        {
             font-size: 1px;
             height: 342em;
             margin-bottom: 48em;
             flex-shrink: 0;
         }
-
-        .photos_line_photo {
+        
+        .photos_line_photo
+        {
             font-size: 1px;
             width: 234em;
             height: 100%;
@@ -60,70 +72,79 @@
             flex-shrink: 0;
         }
 
-        .photos_line_photo img {
+        .photos_line_photo img
+        {
             height: 100%;
             transition: 0.3s ease;
         }
 
-        .photos_line_photo:hover img {
+        .photos_line_photo:hover img
+        {
             transform: scale(1.2);
         }
 
-        @media screen and (max-aspect-ratio: 1.5/1) {
-
+        @media screen and (max-aspect-ratio: 1.5/1)
+        {
             .photos_line,
-            .photos_line_photo {
+            .photos_line_photo
+            {
                 font-size: 2px;
             }
         }
 
-        @media screen and (max-aspect-ratio: 0.8/1) {
+        @media screen and (max-aspect-ratio: 0.8/1)
+        {
 
             .photos_line,
-            .photos_line_photo {
+            .photos_line_photo
+            {
                 font-size: 2.8px;
             }
         }
         /* 底部圆角矩形长条样式 */
-.bottom-bar {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 250px;
-    padding: 10px 10px;
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(15px);
-    border-radius: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 1000; /* 确保显示在最前面 */
-}
+        .bottom-bar
+        {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 250px;
+            padding: 10px 10px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000; /* 确保显示在最前面 */
+        }
 
-/* 按钮样式 */
-.button {
-    width: 80px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.3);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+        /* 按钮样式 */
+        .button
+        {
+            width: 80px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-/* 鼠标悬停时的按钮效果 */
-.button:hover {
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter:blur(15px)
-    transform: scale(1.1);
-}
-/* 全屏提示样式 */
-        #mobile-alert {
+        /* 鼠标悬停时的按钮效果 */
+        .button:hover
+        {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter:blur(15px)
+            transform: scale(1.1);
+        }
+        /* 全屏提示样式 */
+        #mobile-alert
+        {
             display: none;
             position: fixed;
             top: 0;
@@ -140,19 +161,21 @@
             z-index: 9999;
             animation: fadeIn 0.5s ease; /* 动效 */
         }
-
         /* 动效 */
-        @keyframes fadeIn {
-            from {
+        @keyframes fadeIn
+        {
+            from
+            {
                 opacity: 0;
             }
-            to {
+            to
+            {
                 opacity: 1;
             }
         }
-
         /* 确认按钮样式 */
-        #mobile-alert button {
+        #mobile-alert button
+        {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 16px;
@@ -163,13 +186,13 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
-        #mobile-alert button:hover {
+        #mobile-alert button:hover
+        {
             background-color: #0056b3;
         }
     </style>
 </head>
-
+     <!-- 照片区，要是我能做一个自动加入新图的功能就好了 -->
 <body>
     <div class="photos">
         <div class="photos_line">
@@ -287,11 +310,58 @@
                 <img src="photos/photo (35).png" />
             </div>
         </div>
+               <div class="photos_line">
+            <div class="photos_line_photo">
+                <img src="photos/photo (36).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (37).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (38).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (39).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (40).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (41).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (42).png" />
+            </div>
+        </div>
+               <div class="photos_line">
+            <div class="photos_line_photo">
+                <img src="photos/photo (43).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (44).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (45).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (46).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (47).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (48).png" />
+            </div>
+            <div class="photos_line_photo">
+                <img src="photos/photo (49).png" />
+            </div>
+        </div>
     </div>
+    <!--提示，如果适配了手机访问就删-->
     <div id="mobile-alert">
         <div>
             <p style="font-size:30px;">本功能仅限PC端使用</p>
-            <button onclick="hideMobileAlert()"></button>
+            <button onclick="hideMobileAlert()">关闭</button>
         </div>
     </div>
     <div class="bottom-bar">
@@ -315,27 +385,32 @@
         mouse_y: 0,
         standard_width: 1440,
         scale_nums: 1,
-        init() {
+        init()
+        {
             this.resize();
-            window.addEventListener("resize", () => {
-                this.resize();
-            });
-            this.container.addEventListener("mousedown", () => {
-                this.if_movable = true;
-                this.mouse_x = event.clientX;
-                this.mouse_y = event.clientY;
-            });
-            this.container.addEventListener("mouseup", () => {
-                this.if_movable = false;
-            });
-            this.container.addEventListener("mouseleave", () => {
-                this.if_movable = false;
-            });
-            this.container.addEventListener("mousemove", () => {
-                this.move(event.clientX, event.clientY);
-            });
+            window.addEventListener("resize", () => this.resize());
+            window.addEventListener("orientationchange", () => this.resize());
+            //支持触摸事件
+            this.container.addEventListener("mousedown", (e) => this.startMove(e));
+            this.container.addEventListener("mouseup", () => this.endMove());
+            this.container.addEventListener("mouseleave", () => this.endMove());
+            this.container.addEventListener("mousemove", (e) => this.move(e.clientX, e.clientY));
+            this.container.addEventListener("touchstart", (e) => this.startMove(e.touches[0]));
+            this.container.addEventListener("touchend", () => this.endMove());
+            this.container.addEventListener("touchcancel", () => this.endMove());
+            this.container.addEventListener("touchmove", (e) => this.move(e.touches[0].clientX, e.touches[0].clientY));
         },
-        resize() {
+        startMove(event) {
+            this.if_movable = true;
+            this.mouse_x = event.clientX;
+            this.mouse_y = event.clientY;
+        },
+        endMove()
+        {
+            this.if_movable = false;
+        },
+        resize()
+        {
             let imgs = [...document.querySelectorAll(".photos_line_photo")];
             this.container_width = this.container.offsetWidth;
             this.container_height = this.container.offsetHeight;
@@ -343,95 +418,59 @@
             this.photo_height = imgs[0].offsetHeight;
             this.scale_nums = document.body.offsetWidth / this.standard_width;
             this.container.style.transform = `scale(${this.scale_nums})`;
-            gsap.to(imgs, {
-                transform: `translate(0,0)`,
-                duration: 0,
-                ease: 'power4.out'
-            });
-            this.img_data = [];
-            imgs.forEach(img => {
-                this.img_data.push({
-                    node: img,
-                    x: img.offsetLeft,
-                    y: img.offsetTop,
-                    mov_x: 0,
-                    mov_y: 0,
-                    ani: 0
-                });
-            });
+            gsap.to(imgs, { transform: `translate(0,0)`, duration: 0 });
+            
+            this.img_data = imgs.map((img) => (
+            {
+                node: img,
+                x: img.offsetLeft,
+                y: img.offsetTop,
+                mov_x: 0,
+                mov_y: 0,
+                ani: 0,
+            }));
         },
-        move(x, y) {
-            if (!this.if_movable) return 0;
+        move(x, y)
+        {
+            if (!this.if_movable) return;
             let distance_x = (x - this.mouse_x) / this.scale_nums;
             let distance_y = (y - this.mouse_y) / this.scale_nums;
-            this.img_data.forEach((img) => {
-                let duration = 1;
+
+            this.img_data.forEach((img) =>
+            {
+                let duration = 0.5; //快速动画
                 img.mov_x += distance_x;
-                if (img.x + img.mov_x > this.container_width) {
-                    img.mov_x -= this.container_width;
-                    duration = 0;
-                }
-                if (img.x + img.mov_x < -this.photo_width) {
-                    img.mov_x += this.container_width;
-                    duration = 0;
-                }
                 img.mov_y += distance_y;
-                if (img.y + img.mov_y > this.container_height) {
-                    img.mov_y -= this.container_height;
-                    duration = 0;
-                }
-                if (img.y + img.mov_y < -this.photo_height) {
-                    img.mov_y += this.container_height;
-                    duration = 0;
-                }
-                if (img.ani) img.ani.kill();
-                img.ani = gsap.to(img.node, {
+
+                if (img.x + img.mov_x > this.container_width) img.mov_x -= this.container_width;
+                if (img.x + img.mov_x < -this.photo_width) img.mov_x += this.container_width;
+                if (img.y + img.mov_y > this.container_height) img.mov_y -= this.container_height;
+                if (img.y + img.mov_y < -this.photo_height) img.mov_y += this.container_height;
+
+                 if (img.ani) img.ani.kill();
+                img.ani = gsap.to(img.node,
+                {
                     transform: `translate(${img.mov_x}px,${img.mov_y}px)`,
-                    duration: duration,
-                    ease: 'power4.out'
+                    duration,
                 });
             });
             this.mouse_x = x;
             this.mouse_y = y;
-        }
+        },
     };
-   photobox.init();
-     // 获取所有按钮
-    const buttons = document.querySelectorAll('.button');
-    
-    /*给每个按钮绑定点击事件
-    buttons.forEach((button, index) => {
-        button.addEventListener('click', () => {
-            alert(`你点击了按钮${index + 1}`);
-        });
-    });*/
-
-     // 改进的 isMobile 函数
-function isMobile() {
-    const userAgent = navigator.userAgent;
-    const isMobileAgent = /Android|iPhone|iPod|IEMobile/i.test(userAgent);
-    const isSmallScreen = window.innerWidth <= 768; // 判断屏幕宽度是否小于等于 768px
-    return isMobileAgent || isSmallScreen;
-}
-
-// 显示提示
-function showMobileAlert() {
-    if (isMobile()) {
-        const alertBox = document.getElementById('mobile-alert');
-        alertBox.style.display = 'flex';
+    photobox.init();
+    function isMobile()
+    {
+        return /Android|iPhone|iPod|IEMobile/i.test(navigator.userAgent) || window.innerWidth <= 768;
     }
-}
-
-// 隐藏提示
-function hideMobileAlert() {
-    const alertBox = document.getElementById('mobile-alert');
-    alertBox.style.display = 'none';
-}
-
-// 页面加载完成后检测
-window.onload = function() {
-    showMobileAlert();
-};
+    function showMobileAlert()
+    {
+        if (isMobile()) document.getElementById('mobile-alert').style.display = 'flex';
+    }
+    function hideMobileAlert()
+    {
+        document.getElementById('mobile-alert').style.display = 'none';
+    }
+    window.onload = showMobileAlert;
 </script>
-
 </html>
