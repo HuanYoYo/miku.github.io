@@ -406,29 +406,32 @@
         });
     });*/
 
-     // 检测是否为移动设备
-        function isMobile() {
-            return /Android|iPhone|iPod|IEMobile/i.test(navigator.userAgent);
-        }
+     // 改进的 isMobile 函数
+function isMobile() {
+    const userAgent = navigator.userAgent;
+    const isMobileAgent = /Android|iPhone|iPod|IEMobile/i.test(userAgent);
+    const isSmallScreen = window.innerWidth <= 768; // 判断屏幕宽度是否小于等于 768px
+    return isMobileAgent || isSmallScreen;
+}
 
-        // 显示提示
-        function showMobileAlert() {
-            if (isMobile()) {
-                const alertBox = document.getElementById('mobile-alert');
-                alertBox.style.display = 'flex';
-            }
-        }
+// 显示提示
+function showMobileAlert() {
+    if (isMobile()) {
+        const alertBox = document.getElementById('mobile-alert');
+        alertBox.style.display = 'flex';
+    }
+}
 
-        // 隐藏提示
-        function hideMobileAlert() {
-            const alertBox = document.getElementById('mobile-alert');
-            alertBox.style.display = 'none';
-        }
+// 隐藏提示
+function hideMobileAlert() {
+    const alertBox = document.getElementById('mobile-alert');
+    alertBox.style.display = 'none';
+}
 
-        // 页面加载完成后检测
-        window.onload = function() {
-            showMobileAlert();
-        };
+// 页面加载完成后检测
+window.onload = function() {
+    showMobileAlert();
+};
 </script>
 
 </html>
