@@ -75,12 +75,13 @@
         .photos_line_photo img
         {
             height: 100%;
-            transition: 0.3s ease;
+            transition: 0.2s ease;
         }
 
         .photos_line_photo:hover img
         {
             transform: scale(1.2);
+            pointer-events: none;/* 禁止图片缩放时响应点击事件 */
         }
 
         @media screen and (max-aspect-ratio: 1.5/1)
@@ -232,14 +233,14 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
-            display: none;
+            display: none;/* 初始状态为隐藏 */
             justify-content: center;
             align-items: center;
             z-index: 10000;
         }
         
         .modal.show {
-            display: flex;
+            display: flex;/* 显示弹窗 */
         }
         
         .modal-content {
@@ -656,7 +657,8 @@
 
     // 点击图片，显示弹窗
     photos.forEach(photo => {
-        photo.addEventListener('click', () => {
+        photo.addEventListener('click', (e) => {
+            e.stopPropagation(); // 阻止冒泡，避免 hover 干扰
             modalImage.src = photo.src; // 将图片传递到弹窗
             modal.classList.add('show');
         });
